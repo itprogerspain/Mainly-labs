@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login - Mainly Labs</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        h1 { color: #f28c38; }
+        p { color: #6a9fb5; }
+        form { display: inline-block; text-align: left; }
+        input { width: 200px; margin: 5px; padding: 5px; }
+        button { background-color: #1a73e8; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+    </style>
 </head>
 <body>
-
+    <h1>Mainly Labs</h1>
+    <p>DISEÑO EXPERIMENTAL</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Acceder</button>
+        {% if form.errors %}
+            <p style="color: red;">Неверное имя пользователя или пароль</p>
+        {% endif %}
+    </form>
 </body>
 </html>
