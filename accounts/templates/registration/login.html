@@ -1,26 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login - Mainly Labs</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        h1 { color: #f28c38; }
-        p { color: #6a9fb5; }
-        form { display: inline-block; text-align: left; }
-        input { width: 200px; margin: 5px; padding: 5px; }
-        button { background-color: #1a73e8; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — Mainly Labs</title>
+  <style>
+    :root{
+      --accent-orange: #d9534f;
+      --accent-blue: #4a90e2;
+      --card-bg: #ffffff;
+      --page-bg: #f5f8fb;
+      --input-border: #e6edf5;
+      --text: #222;
+    }
+
+    html,body { height:100%; margin:0; font-family: "Montserrat", "Inter", Arial, sans-serif; background: var(--page-bg); color:var(--text); }
+
+    /* center page */
+    .page {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    /* card */
+    .card {
+      width: 360px;
+      background: var(--card-bg);
+      border-radius:12px;
+      padding:28px;
+      box-shadow: 0 10px 30px rgba(15,30,50,0.08);
+      text-align:center;
+    }
+
+    .brand {
+      margin:0 0 0px;
+      font-size:35px;
+      font-weight:800;
+      color:var(--accent-orange);
+      letter-spacing:0.0px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      display: inline-block;
+      background: #6ba6e7;
+      color: #fff;
+      font-weight:600;
+      font-size:8px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      padding:2px 6px;
+      border-radius:4px;
+      margin-bottom:16px;
+}
+
+
+    form { margin-top:6px; text-align:left; }
+
+    .form-group {
+      margin-bottom: 12px;
+      margin-top: 20px;
+    }
+
+    /* style inputs rendered by Django (class form-control) */
+    input.form-control,
+    input[type="text"],
+    input[type="password"] {
+      width:100%;
+      box-sizing:border-box;
+      padding:12px 14px;
+      border-radius:9px;
+      border:1px solid var(--input-border);
+      background: #fff;
+      font-size:14px;
+      outline:none;
+      transition: box-shadow .12s, border-color .12s;
+    }
+
+    input.form-control:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 4px 14px rgba(26,115,232,0.10);
+    }
+
+    .btn {
+      display: block;
+      width: 130px;
+      margin: 6px auto 0 auto;
+      padding: 12px;
+      border-radius: 9px;
+      border: none;
+      background: linear-gradient(180deg, #032b66 0%, #002855 100%);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+
+    .error {
+      color:#b00020;
+      font-size:13px;
+      margin-top:8px;
+      text-align:center;
+    }
+
+    .help {
+      margin-top:10px;
+      font-size:13px;
+      text-align:center;
+      color:#6b7785;
+    }
+
+    /* small screens */
+    @media (max-width:420px){
+      .card { width: 92%; padding:20px; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Mainly Labs</h1>
-    <p>DISEÑO EXPERIMENTAL</p>
-    <form method="post">
+  <div class="page">
+    <div class="card">
+      <h1 class="brand">Mainly Labs</h1>
+      <p class="subtitle">DISEÑO EXPERIMENTAL</p>
+
+      <form method="post" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Acceder</button>
-        {% if form.errors %}
-            <p style="color: red;">Неверное имя пользователя или пароль</p>
+
+        {# non-field errors, e.g. invalid credentials #}
+        {% if form.non_field_errors %}
+          <div class="error">
+            {% for err in form.non_field_errors %}
+              {{ err }}
+            {% endfor %}
+          </div>
         {% endif %}
-    </form>
+
+        <div class="form-group">
+          {{ form.username }}      {# widget has placeholder and class from your form #}
+          {% if form.username.errors %}
+            <div class="error">
+              {% for e in form.username.errors %}{{ e }}{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.password }}
+          {% if form.password.errors %}
+            <div class="error">
+              {% for e in form.password.errors %}{{ e }}{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <button class="btn" type="submit">Acceder</button>
+
+      </form>
+    </div>
+  </div>
 </body>
 </html>
+
+
+

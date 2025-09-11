@@ -1,11 +1,12 @@
 from django.contrib.auth.views import LoginView
-from .forms import LoginForm
+from .forms import CustomLoginForm
+# from .forms import LoginForm
 from django.urls import reverse_lazy
 from django.shortcuts import render
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
-    authentication_form = LoginForm
+    authentication_form = CustomLoginForm
     success_url = reverse_lazy('home')
 
     def get_success_url(self):
