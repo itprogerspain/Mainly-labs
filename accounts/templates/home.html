@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head><title>Home</title></head>
-<body>
-    <h1>Welcome, {{ request.user.username }}!</h1>
-    <a href="{% url 'logout' %}">Logout</a>
-</body>
-</html>
+{% extends "base_generic.html" %}
+{% block title %}Home — Mainly Labs{% endblock %}
+
+{% block content %}
+<h1>Bienvenido a Mainly Labs</h1>
+{% endblock %}
+
+
