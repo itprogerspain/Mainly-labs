@@ -1,3 +1,5 @@
+render_template.py
+
 # Python / Django
 __pycache__/
 *.pyc
