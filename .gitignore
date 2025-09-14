@@ -1,4 +1,5 @@
 render_template.py
+output.html
 
 # Python / Django
 __pycache__/
