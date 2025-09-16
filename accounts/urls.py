@@ -8,11 +8,11 @@ from .forms import (
 )
 
 urlpatterns = [
-    # 🔑 Login / Logout (через твой кастомный класс)
+    # 🔑 Login / Logout
     path("login/", views.CustomLoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(next_page="login"), name="logout"),
 
-    # 🏠 Домашняя страница (у тебя уже есть)
+    # 🏠
     path("home/", views.home_view, name="home"),
 
     # 📝 Registro

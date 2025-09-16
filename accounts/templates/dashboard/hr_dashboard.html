@@ -1,13 +1,13 @@
 {% extends "base_dashboard.html" %}
 {% load static %}
 
-{% block title %}Admin Dashboard — Mainly Labs{% endblock %}
+{% block title %}HR Dashboard — Mainly Labs{% endblock %}
 
 {% block content %}
 <style>
-  /* ADMIN HEADER — blue */
+  /* HR HEADER — orange */
   .header {
-    background: linear-gradient(180deg,#033c8c,#032b66) !important;
+    background: linear-gradient(180deg,#ff8c42,#e67300) !important;
   }
 
   /* SEARCH */
@@ -37,19 +37,19 @@
     padding:10px;
     background:#fff;
     border-radius:12px;
-    border:1px solid #d9e2f3;
-    color:#033c8c;
+    border:1px solid #ffe0cc;
+    color:#b34700;
     text-decoration:none;
     font-weight:600;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: background .2s, color .2s;
   }
   .quick-link:hover {
-    background:#eaf1fb;
-    color:#021e4f;
+    background:#fff4eb;
+    color:#802b00;
   }
 
-  /* WIDGETS (admin style) */
+  /* WIDGETS */
   .widgets {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -60,17 +60,17 @@
     background:#fff;
     padding:16px;
     border-radius:12px;
-    border:1px solid #d9e2f3;    /* blue frame */
+    border:1px solid #ffe0cc;   /* orange frame */
     box-shadow:0 2px 6px rgba(0,0,0,.05);
     transition: background .2s;
   }
   .widget:hover {
-    background:#f5f9ff;
+    background:#fff7f0;
   }
   .widget h4 {
     margin:0 0 10px;
     font-size:15px;
-    color:#033c8c;
+    color:#b34700;
     font-weight:600;
   }
   .widget p, .widget li {
@@ -119,12 +119,12 @@
     align-items:center;
     gap:8px;
     margin:8px 0;
-    color:#033c8c;
+    color:#b34700;
     text-decoration:none;
     font-weight:500;
     transition: color .2s;
   }
-  .card a:hover { text-decoration:underline; color:#021e4f; }
+  .card a:hover { text-decoration:underline; color:#802b00; }
 
   /* RESPONSIVE */
   @media (max-width: 1100px) {
@@ -139,54 +139,56 @@
 </style>
 
 <!-- SEARCH -->
-<input type="search" class="search-bar" placeholder="🔍 Buscar usuarios, proyectos, reportes..." aria-label="buscar">
+<input type="search" class="search-bar" placeholder="🔍 Buscar empleados, vacaciones, evaluaciones..." aria-label="buscar">
 
 <!-- CHIPS -->
-<div class="quick-links" role="navigation" aria-label="accesos rápidos admin">
-  <a class="quick-link" href="#">➕ Crear usuario</a>
-  <a class="quick-link" href="#">👥 Asignar roles</a>
-  <a class="quick-link" href="#">📂 Crear proyecto</a>
-  <a class="quick-link" href="#">📊 Ver KPIs</a>
-  <a class="quick-link" href="#">⚙️ Configuración</a>
+<div class="quick-links" role="navigation" aria-label="accesos rápidos HR">
+  <a class="quick-link" href="#">➕ Alta empleado</a>
+  <a class="quick-link" href="#">❌ Baja empleado</a>
+  <a class="quick-link" href="#">🌴 Vacaciones</a>
+  <a class="quick-link" href="#">📅 Convocar reunión</a>
+  <a class="quick-link" href="#">📝 Evaluación</a>
 </div>
 
 <!-- WIDGETS -->
-<div class="widgets" role="region" aria-label="mini widgets admin">
+<div class="widgets" role="region" aria-label="mini widgets HR">
   <div class="widget">
-    <h4>Resumen global</h4>
-    <p>👥 Usuarios activos: <strong>124</strong></p>
-    <p>📂 Proyectos en curso: <strong>18</strong></p>
+    <h4>Resumen empleados</h4>
+    <p>👥 Activos: <strong>142</strong></p>
+    <p>❌ Inactivos: <strong>8</strong></p>
   </div>
 
   <div class="widget">
-    <h4>Próximos eventos corporativos</h4>
+    <h4>Solicitudes pendientes</h4>
     <ul style="margin:0; padding-left:18px;">
-      <li>🎉 Fiesta anual — 30/07</li>
-      <li>📢 Asamblea general — 15/08</li>
+      <li>🌴 Vacaciones — 4</li>
+      <li>📝 Evaluaciones — 2</li>
     </ul>
   </div>
 
   <div class="widget">
-    <h4>KPIs clave</h4>
-    <p>📊 Rotación personal: <strong>3%</strong></p>
-    <p>⏱️ Horas trabajadas globales: <strong>1520h</strong></p>
+    <h4>Próximas reuniones</h4>
+    <ul style="margin:0; padding-left:18px;">
+      <li>📅 Equipo ventas — 18/07</li>
+      <li>📅 Comité RRHH — 22/07</li>
+    </ul>
   </div>
 
   <div class="widget">
-    <h4>Sugerencias pendientes</h4>
-    <p>💡 Ideas nuevas: <strong>12</strong></p>
-    <p>🗳️ Votaciones abiertas: <strong>3</strong></p>
+    <h4>Asistencia hoy</h4>
+    <p>✅ Presentes: <strong>126</strong></p>
+    <p>🚫 Ausentes: <strong>24</strong></p>
   </div>
 </div>
 
 <!-- NEWS + CALENDAR -->
 <div class="content-grid">
   <section class="news" aria-labelledby="news-title">
-    <h2 id="news-title">Noticias y Comunicados</h2>
+    <h2 id="news-title">Comunicaciones internas</h2>
     <ul>
-      <li><b>15/07:</b> Nuevo plan estratégico publicado.</li>
-      <li><b>12/07:</b> Actualización en políticas de seguridad.</li>
-      <li><b>10/07:</b> Integración con nuevo sistema de nóminas.</li>
+      <li><b>15/07:</b> Nueva política de teletrabajo publicada.</li>
+      <li><b>12/07:</b> Recordatorio: evaluaciones trimestrales en curso.</li>
+      <li><b>10/07:</b> Anuncio: jornada de formación interna en agosto.</li>
     </ul>
   </section>
 
@@ -199,40 +201,47 @@
 </div>
 
 <!-- CARDS -->
-<section class="cards" aria-label="quick cards admin">
+<section class="cards" aria-label="quick cards HR">
   <div class="card">
-    <div class="card-header"><span class="icon">👥</span><h3>Gestión de usuarios</h3></div>
-    <a href="#">➕ Crear usuario</a>
-    <a href="#">👥 Gestionar usuarios</a>
-    <a href="#">🔑 Asignar roles</a>
-    <a href="#">🚫 Activar/Desactivar</a>
+    <div class="card-header"><span class="icon">👥</span><h3>Gestión empleados</h3></div>
+    <a href="#">➕ Alta empleado</a>
+    <a href="#">❌ Baja empleado</a>
+    <a href="#">🔄 Activar/Desactivar</a>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="icon">📂</span><h3>Gestión de proyectos</h3></div>
-    <a href="#">📂 Crear proyecto</a>
-    <a href="#">👨‍💼 Asignar responsable</a>
-    <a href="#">📊 Estado general</a>
+    <div class="card-header"><span class="icon">🌴</span><h3>Vacaciones</h3></div>
+    <a href="#">📥 Solicitudes recibidas</a>
+    <a href="#">✅ Aprobadas</a>
+    <a href="#">❌ Rechazadas</a>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="icon">📊</span><h3>Supervisión global</h3></div>
-    <a href="#">📈 Panel de KPIs</a>
-    <a href="#">📉 Informes generales</a>
+    <div class="card-header"><span class="icon">📅</span><h3>Reuniones</h3></div>
+    <a href="#">📅 Convocar reunión</a>
+    <a href="#">📋 Agenda</a>
+    <a href="#">🗂️ Historial</a>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="icon">🏢</span><h3>Gestión organizacional</h3></div>
-    <a href="#">🎉 Crear evento corporativo</a>
+    <div class="card-header"><span class="icon">📝</span><h3>Evaluaciones</h3></div>
+    <a href="#">🚀 Lanzar evaluación</a>
+    <a href="#">👀 Revisar resultados</a>
+    <a href="#">💾 Guardadas</a>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="icon">📢</span><h3>Comunicaciones</h3></div>
     <a href="#">📰 Publicar noticia</a>
-    <a href="#">💡 Revisar sugerencias</a>
+    <a href="#">📑 Políticas</a>
+    <a href="#">🔔 Recordatorios</a>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="icon">⚙️</span><h3>Configuración del sistema</h3></div>
-    <a href="#">⚙️ Preferencias</a>
-    <a href="#">🔒 Seguridad</a>
-    <a href="#">🔗 Integraciones</a>
+    <div class="card-header"><span class="icon">⏱️</span><h3>Asistencia</h3></div>
+    <a href="#">📜 Registro fichajes</a>
+    <a href="#">📊 Reporte diario</a>
+    <a href="#">📈 Estadísticas</a>
   </div>
 </section>
 
