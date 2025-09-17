@@ -22,9 +22,10 @@
       font-family: "Montserrat", "Inter", Arial, sans-serif;
       background: var(--page-bg);
       color: var(--text);
+      font-size: 17px;
     }
 
-    /* center page */
+    /* main page container */
     .page {
       min-height: 100vh;
       display: flex;
@@ -33,106 +34,116 @@
       padding: 24px;
     }
 
-    /* card */
+    /* card wrapper */
     .card {
-      width: 360px;
+      width: 100%;
+      max-width: 600px;
+      min-height: 520px;
       background: var(--card-bg);
-      border-radius: 12px;
-      padding: 28px;
-      box-shadow: 0 10px 30px rgba(15,30,50,0.08);
+      border-radius: 18px;
+      padding: 48px;
+      box-shadow: 0 14px 44px rgba(15,30,50,0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* header - middle - footer */
+    }
+
+    /* brand */
+    .brand {
+      margin: 0 0 16px;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--accent-orange);
+      line-height: 1.2;
       text-align: center;
     }
 
-    .brand {
-      margin: 0 0 0px;
-      font-size: 35px;
-      font-weight: 800;
-      color: var(--accent-orange);
-      letter-spacing: 0.0px;
-      line-height: 1.2;
-    }
-
+    /* subtitle bar */
     .subtitle {
       display: inline-block;
       background: #6ba6e7;
       color: #fff;
       font-weight: 600;
-      font-size: 8px;
+      font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-bottom: 16px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-bottom: 20px;
     }
 
-    /* Avatar */
-    .avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-      margin: 0 auto 12px auto;
-      border: 2px solid #ddd;
+    .card-header {
+      text-align: center;
     }
 
-    form { margin-top: 6px; text-align: left; }
+    .card-middle {
+      flex: 1;
+      display: flex;
+      align-items: center;   /* vertical centering */
+      justify-content: center;
+      flex-direction: column;
+    }
 
-    .form-group {
-      margin-bottom: 12px;
+    .card-footer {
+      text-align: center;
       margin-top: 20px;
     }
 
-    /* style inputs rendered by Django (class form-control) */
+    /* input fields */
+    .form-group {
+      margin-bottom: 22px;
+      width: 100%;
+    }
+
     input.form-control,
     input[type="text"],
     input[type="password"],
     input[type="email"] {
       width: 100%;
-      box-sizing: border-box;
-      padding: 12px 14px;
-      border-radius: 9px;
+      padding: 16px 18px;
+      border-radius: 12px;
       border: 1px solid var(--input-border);
       background: #fff;
-      font-size: 14px;
+      font-size: 17px;
       outline: none;
       transition: box-shadow .12s, border-color .12s;
     }
 
     input.form-control:focus {
       border-color: var(--accent-blue);
-      box-shadow: 0 4px 14px rgba(26,115,232,0.10);
+      box-shadow: 0 4px 16px rgba(26,115,232,0.18);
     }
 
+    /* button */
     .btn {
       display: block;
-      width: 160px;
-      margin: 12px auto 0 auto;
-      padding: 12px;
-      border-radius: 9px;
+      width: 220px;
+      margin: 0 auto;
+      padding: 16px;
+      border-radius: 12px;
       border: none;
       background: linear-gradient(180deg, #032b66 0%, #002855 100%);
       color: #fff;
       font-weight: 700;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 17px;
       transition: transform .15s ease;
     }
 
     .btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     .error {
       color: #b00020;
-      font-size: 13px;
-      margin-top: 8px;
+      font-size: 15px;
+      margin-top: 12px;
       text-align: center;
     }
 
     .help {
-      margin-top: 10px;
-      font-size: 13px;
+      margin-top: 16px;
+      font-size: 15px;
       text-align: center;
       color: #6b7785;
     }
@@ -146,20 +157,38 @@
       text-decoration: underline;
     }
 
-    /* small screens */
-    @media (max-width:420px){
-      .card { width: 92%; padding:20px; }
+    /* responsive for small screens */
+    @media (max-width:480px){
+      .card {
+        padding: 28px;
+        min-height: 480px;
+      }
+      .brand { font-size: 34px; }
+      .subtitle { font-size: 12px; padding: 4px 8px; }
+      input, .btn { font-size: 16px; padding: 15px; }
     }
   </style>
 </head>
 <body>
   <div class="page">
     <div class="card">
-      <h1 class="brand">Mainly Labs</h1>
-      <p class="subtitle">{% block subtitle %}DISEÑO EXPERIMENTAL{% endblock %}</p>
 
-      {% block content %}{% endblock %}
+      <div class="card-header">
+        <h1 class="brand">Mainly Labs</h1>
+        <p class="subtitle">{% block subtitle %}DISEÑO EXPERIMENTAL{% endblock %}</p>
+      </div>
+
+      <div class="card-middle">
+        {% block content %}{% endblock %}
+      </div>
+
+      <div class="card-footer">
+        {% block footer %}{% endblock %}
+      </div>
+
     </div>
   </div>
 </body>
 </html>
+
+
