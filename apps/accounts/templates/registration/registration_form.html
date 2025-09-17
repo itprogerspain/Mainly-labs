@@ -1,12 +1,21 @@
-{% extends "base/base/base_generic.html" %}
+{% extends "base/base_form.html" %}
 
 {% block title %}Registro — Mainly Labs{% endblock %}
-{% block subtitle %}Crear cuenta{% endblock %}
+{% block subtitle %}Crea tu cuenta{% endblock %}
 
 {% block content %}
-<form method="post">
+<form method="post" novalidate class="registration-form">
   {% csrf_token %}
 
+  {% if form.non_field_errors %}
+    <div class="error">
+      {% for err in form.non_field_errors %}
+        {{ err }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Username -->
   <div class="form-group">
     {{ form.username }}
     {% for e in form.username.errors %}
@@ -14,6 +23,7 @@
     {% endfor %}
   </div>
 
+  <!-- Email -->
   <div class="form-group">
     {{ form.email }}
     {% for e in form.email.errors %}
@@ -21,6 +31,7 @@
     {% endfor %}
   </div>
 
+  <!-- Password -->
   <div class="form-group">
     {{ form.password1 }}
     {% for e in form.password1.errors %}
@@ -28,6 +39,7 @@
     {% endfor %}
   </div>
 
+  <!-- Repeat password -->
   <div class="form-group">
     {{ form.password2 }}
     {% for e in form.password2.errors %}
@@ -35,11 +47,68 @@
     {% endfor %}
   </div>
 
-  <button class="btn" type="submit">Registrarse</button>
+  <!-- Password checklist (after both password fields) -->
+  <div class="form-group" style="margin-top:10px; margin-bottom:30px;">
+    {% if form.password1.help_text %}
+      <div class="help">
+        {{ form.password1.help_text|safe }}
+      </div>
+    {% endif %}
+
+    <ul id="pw-checklist" style="list-style: none; padding-left: 0; margin-top: 8px; font-size: 12px; color: #6b7785;">
+      <li data-cond="length">• Mínimo 8 caracteres</li>
+      <li data-cond="digit">• Contiene al menos un número</li>
+      <li data-cond="upperlower">• Mayúsculas y minúsculas</li>
+      <li data-cond="special">• Incluye un símbolo (ej. !@#)</li>
+    </ul>
+  </div>
+
+  <!-- Submit button with extra spacing -->
+  <div style="margin-top: 40px;">
+    <button class="btn" type="submit">Crear cuenta</button>
+  </div>
 </form>
 
-<p class="help">
-  ¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a>
-</p>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const pwInput = document.querySelector('input[name="password1"]');
+  const checklist = {
+    length: document.querySelector('#pw-checklist li[data-cond="length"]'),
+    digit: document.querySelector('#pw-checklist li[data-cond="digit"]'),
+    upperlower: document.querySelector('#pw-checklist li[data-cond="upperlower"]'),
+    special: document.querySelector('#pw-checklist li[data-cond="special"]'),
+  };
+
+  function testPassword(pw) {
+    return {
+      length: pw.length >= 8,
+      digit: /[0-9]/.test(pw),
+      upperlower: /[a-z]/.test(pw) && /[A-Z]/.test(pw),
+      special: /[!@#$%^&*(),.?":{}|<>]/.test(pw)
+    };
+  }
+
+  function updateChecklist(results) {
+    for (const key in results) {
+      const el = checklist[key];
+      if (!el) continue;
+      el.style.color = results[key] ? '#16a34a' : '#6b7785';
+      el.style.fontWeight = results[key] ? '600' : '400';
+    }
+  }
+
+  if (pwInput) {
+    pwInput.addEventListener('input', function (e) {
+      updateChecklist(testPassword(e.target.value || ''));
+    });
+    updateChecklist(testPassword(pwInput.value || ''));
+  }
+});
+</script>
 {% endblock %}
 
+{% block footer %}
+<p class="help">
+  <a href="{% url 'login' %}">¿Ya tienes una cuenta? Inicia sesión</a>
+</p>
+{% endblock %}
