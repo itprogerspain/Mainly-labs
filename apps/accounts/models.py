@@ -15,8 +15,9 @@ class CustomManagerUser(UserManager):
 # Extended user model
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
-        ('superadmin', 'Super Admin'),
         ('admin', 'Admin'),
+        ('hr', 'HR'),
+        ('tech', 'Technician')
         ('user', 'User'),
     ]
 
