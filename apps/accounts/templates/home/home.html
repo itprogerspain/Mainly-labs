@@ -1,8 +1,10 @@
+
 {% extends "base_generic.html" %}
 {% block title %}Home — Mainly Labs{% endblock %}
 
 {% block content %}
 <h1>Bienvenido a Mainly Labs</h1>
+<a href="{% url 'login' %}" class="btn">Iniciar sesión</a>
 {% endblock %}
 
 

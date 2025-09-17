@@ -29,7 +29,7 @@ class CustomLoginView(LoginView):
 
 # 🏠 Home page
 def home_view(request):
-    return render(request, "home.html")
+    return render(request, "home/home.html")
 
 
 # 📝 Registration view
