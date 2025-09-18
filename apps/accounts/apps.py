@@ -6,3 +6,4 @@ class AccountsConfig(AppConfig):
     name = 'apps.accounts'
 
 # no es nada
+# no es nada
