@@ -4,6 +4,7 @@ from django.utils.safestring import mark_safe
 from .models import CustomUser
 
 
+
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
 
@@ -35,3 +36,4 @@ class CustomUserAdmin(UserAdmin):
         return "—"
 
     avatar_preview.short_description = "Avatar"
+

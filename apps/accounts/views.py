@@ -61,3 +61,4 @@ def tech_dashboard(request):
 @login_required
 def user_dashboard(request):
     return render(request, "dashboard/user_dashboard.html")
+
