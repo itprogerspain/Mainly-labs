@@ -4,11 +4,11 @@
 {% block subtitle %}Inicia sesión{% endblock %}
 
 {% block content %}
+
 <!-- Login form container -->
 <form method="post" novalidate class="login-form">
   {% csrf_token %}
 
-  <!-- Display non-field errors -->
   {% if form.non_field_errors %}
     <div class="error">
       {% for err in form.non_field_errors %}

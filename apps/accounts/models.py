@@ -41,3 +41,4 @@ class CustomUser(AbstractUser):
         return self.username
 
     objects = CustomManagerUser()
+
