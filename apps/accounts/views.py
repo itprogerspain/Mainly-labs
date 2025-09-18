@@ -1,13 +1,30 @@
 from django.contrib.auth.views import LoginView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import FormView
 
 from .forms import (
     CustomLoginForm,
     ProfileForm,
+    RegistrationForm,
 )
+
+
+
+# RegisterView handles new user registration using the custom three-field form
+class RegisterView(FormView):
+    template_name = "registration/registration_form.html"
+    form_class = RegistrationForm
+    success_url = reverse_lazy("login")
+
+    def form_valid(self, form):
+        # Save the new user instance if the form is valid
+        form.save()
+        return super().form_valid(form)
+
+
 
 # Custom login view with role-based redirect
 class CustomLoginView(LoginView):

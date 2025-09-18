@@ -14,6 +14,66 @@ from django.contrib.auth.password_validation import password_validators_help_tex
 CustomUser = get_user_model()
 
 
+# Registration form (username + password + password confirmation)
+class RegistrationForm(forms.ModelForm):
+    username = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nombre de usuario',
+            'class': 'form-control',
+            'autocomplete': 'username'
+        })
+    )
+    email = forms.EmailField(
+        label="",
+        widget=forms.EmailInput(attrs={
+            'placeholder': 'Correo electrónico',
+            'class': 'form-control',
+            'autocomplete': 'email'
+        })
+    )
+    password1 = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+            'class': 'form-control',
+            'autocomplete': 'new-password'
+        })
+    )
+    password2 = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Repite la contraseña',
+            'class': 'form-control',
+            'autocomplete': 'new-password'
+        })
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ("username", "email", "password1", "password2")
+
+    def clean(self):
+        # Validate that passwords match
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+
+        if password1 and password2 and password1 != password2:
+            self.add_error('password2', "Passwords do not match.")
+        return cleaned_data
+
+    def save(self, commit=True):
+        # Save the user with the hashed password
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+
+
+
 # Login form
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(

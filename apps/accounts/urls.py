@@ -17,6 +17,9 @@ urlpatterns = [
     # Profile
     path("profile/", views.profile, name="profile"),
 
+    # Registration
+    path("register/", views.RegisterView.as_view(), name="register"),
+
     # Password reset (request email)
     path("password_reset/", auth_views.PasswordResetView.as_view(
         template_name="registration/password_reset_form.html",
@@ -38,3 +41,4 @@ urlpatterns = [
     path("dashboard/tech/", views.tech_dashboard, name="tech_dashboard"),
     path("dashboard/user/", views.user_dashboard, name="user_dashboard"),
 ]
+

@@ -1,5 +1,5 @@
 from django.db import models
-from projects_manager.models import Project
+from apps.projects_manager.models import Project
 
 # Create your models here.
 class PurchaseOrder(models.Model):

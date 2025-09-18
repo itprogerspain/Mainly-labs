@@ -1,6 +1,6 @@
 from django.db import models
-from accounts.models import CustomUser
-from projects_manager.models import Project
+from apps.accounts.models import CustomUser
+from apps.projects_manager.models import Project
 
 # Create your models here.
 class Task(models.Model):

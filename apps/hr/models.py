@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from accounts.models import CustomUser
+from apps.accounts.models import CustomUser
 from typing import List
 
 # Create your models here.
