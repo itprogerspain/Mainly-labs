@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base_generic.html" %}
 
 {% block title %}Login — Mainly Labs{% endblock %}
@@ -7,6 +8,19 @@
 <form method="post" novalidate>
   {% csrf_token %}
 
+=======
+{% extends "base/base_form.html" %}
+
+{% block title %}Login — Mainly Labs{% endblock %}
+{% block subtitle %}Inicia sesión{% endblock %}
+
+{% block content %}
+<!-- Login form container -->
+<form method="post" novalidate class="login-form">
+  {% csrf_token %}
+
+  <!-- Display non-field errors -->
+>>>>>>> 9d4fe1e0c27239dd31bc552a1f9dabee119d2833
   {% if form.non_field_errors %}
     <div class="error">
       {% for err in form.non_field_errors %}
@@ -15,6 +29,10 @@
     </div>
   {% endif %}
 
+<<<<<<< HEAD
+=======
+  <!-- Username / email field -->
+>>>>>>> 9d4fe1e0c27239dd31bc552a1f9dabee119d2833
   <div class="form-group">
     {{ form.username }}
     {% for e in form.username.errors %}
@@ -22,6 +40,10 @@
     {% endfor %}
   </div>
 
+<<<<<<< HEAD
+=======
+  <!-- Password field -->
+>>>>>>> 9d4fe1e0c27239dd31bc552a1f9dabee119d2833
   <div class="form-group">
     {{ form.password }}
     {% for e in form.password.errors %}
@@ -29,15 +51,36 @@
     {% endfor %}
   </div>
 
+<<<<<<< HEAD
   <button class="btn" type="submit">Acceder</button>
 </form>
 
 <p class="help">
   <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a><br>
   <a href="{% url 'register' %}">Crear cuenta nueva</a>
+=======
+  <!-- Forgot password link -->
+  <p class="help" style="margin-bottom: 24px;">
+    <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+  </p>
+
+  <!-- Submit button -->
+  <button class="btn" type="submit">Iniciar sesión</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+<!-- Optional footer for additional links or info -->
+<p class="help">
+  Contacta a tu administrador si no tienes acceso.
+>>>>>>> 9d4fe1e0c27239dd31bc552a1f9dabee119d2833
 </p>
 {% endblock %}
 
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9d4fe1e0c27239dd31bc552a1f9dabee119d2833
