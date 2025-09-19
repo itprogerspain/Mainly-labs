@@ -226,3 +226,112 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ("username", "email")
+
+
+# LDAP User Creation Form
+class LDAPUserCreationForm(forms.Form):
+    ROLE_CHOICES = [
+        ('admin', 'Administrador'),
+        ('hr', 'Recursos Humanos'),
+        ('tech', 'Técnico'),
+        ('user', 'Usuario'),
+    ]
+    
+    username = forms.CharField(
+        label="Nombre de usuario",
+        max_length=50,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ej: jdoe',
+            'autocomplete': 'username'
+        }),
+        help_text="El nombre de usuario para acceder al sistema"
+    )
+    
+    first_name = forms.CharField(
+        label="Nombre",
+        max_length=50,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ej: Juan',
+            'autocomplete': 'given-name'
+        })
+    )
+    
+    last_name = forms.CharField(
+        label="Apellidos",
+        max_length=50,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ej: Pérez García',
+            'autocomplete': 'family-name'
+        })
+    )
+    
+    email = forms.EmailField(
+        label="Correo electrónico",
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ej: juan.perez@empresa.com',
+            'autocomplete': 'email'
+        })
+    )
+    
+    password = forms.CharField(
+        label="Contraseña",
+        min_length=8,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Mínimo 8 caracteres',
+            'autocomplete': 'new-password'
+        }),
+        help_text="La contraseña debe tener al menos 8 caracteres"
+    )
+    
+    confirm_password = forms.CharField(
+        label="Confirmar contraseña",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Repite la contraseña',
+            'autocomplete': 'new-password'
+        })
+    )
+    
+    role = forms.ChoiceField(
+        label="Rol del usuario",
+        choices=ROLE_CHOICES,
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        }),
+        help_text="El rol determina los permisos y accesos del usuario"
+    )
+    
+    is_staff = forms.BooleanField(
+        label="Usuario staff",
+        required=False,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-check-input'
+        }),
+        help_text="Los usuarios staff pueden acceder al panel de administración"
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+        
+        if password and confirm_password:
+            if password != confirm_password:
+                raise forms.ValidationError("Las contraseñas no coinciden")
+        
+        return cleaned_data
+    
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        # Validar que el username solo contenga caracteres válidos para LDAP
+        import re
+        if not re.match(r'^[a-zA-Z0-9._-]+$', username):
+            raise forms.ValidationError(
+                "El nombre de usuario solo puede contener letras, números, puntos, guiones y guiones bajos"
+            )
+        return username
