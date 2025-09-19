@@ -16,18 +16,17 @@ class Course(models.Model):
     modality = models.CharField(max_length=20, choices=MODALITY_CHOICES)
 
 
-class UserCourseProgress(models.Model): #muestra el avance de cada user para cada curso.
-    user = models.ForeignKey(CustomUser)
-    course = models.ForeignKey(Course)
-    date_started = models.DateField(blank=True, null=True)
+class UserCourseProgress(models.Model): # execute this one, once the user click on start course
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    date_started = models.DateField(auto_now=True, blank=True, null=True) 
     date_finished = models.DateField(blank=True, null=True)
-    duration = models.DateField(blank=True, null=True)
+    duration = models.DurationField(blank=True, null=True) 
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if self.date_started and self.date_finished:
-            durantion = self.date_finished - self.date_started
-            self.duration = UserCourseProgress.objects.create(duration=durantion.days)
-            super().save()
+            self.duration = self.date_finished - self.date_started
+        super().save(*args, **kwargs)
 
 
 class certificate(models.Model):

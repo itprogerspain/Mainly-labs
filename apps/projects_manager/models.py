@@ -20,6 +20,7 @@ class Project(models.Model):
     state = models.CharField(max_length=20, choices=STATE_CHOICES, default='incomplete')
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='high')
     created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    updated_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True, null=True, blank=True)
 
