@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import environ
 import os
 from pathlib import Path
+import ldap
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -119,11 +121,83 @@ DATABASES = {
 # }
 
 AUTHENTICATION_BACKENDS = [
+    'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# LDAP Configuration
+# Server URI
+AUTH_LDAP_SERVER_URI = env("AUTH_LDAP_SERVER_URI", default="ldap://localhost:389")
+
+# Bind DN and password (for service account)
+AUTH_LDAP_BIND_DN = env("AUTH_LDAP_BIND_DN", default="")
+AUTH_LDAP_BIND_PASSWORD = env("AUTH_LDAP_BIND_PASSWORD", default="")
+
+# User search configuration
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    env("AUTH_LDAP_USER_DN", default="ou=users,dc=example,dc=com"),
+    ldap.SCOPE_SUBTREE,
+    env("AUTH_LDAP_USER_FILTER", default="(uid=%(user)s)")
+)
+
+# Attribute mapping
+AUTH_LDAP_USER_ATTR_MAP = {
+    "username": "uid",
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail",
+}
+
+# Group configuration
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+    env("AUTH_LDAP_GROUP_DN", default="ou=groups,dc=example,dc=com"),
+    ldap.SCOPE_SUBTREE,
+    "(objectClass=groupOfNames)"
+)
+
+AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
+
+# Map LDAP groups to Django groups and permissions
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    "is_active": env("AUTH_LDAP_GROUP_ACTIVE", default="cn=active,ou=groups,dc=example,dc=com"),
+    "is_staff": env("AUTH_LDAP_GROUP_STAFF", default="cn=staff,ou=groups,dc=example,dc=com"),
+    "is_superuser": env("AUTH_LDAP_GROUP_SUPERUSER", default="cn=superuser,ou=groups,dc=example,dc=com"),
+}
+
+# Role mapping based on LDAP groups
+AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
+    "role": {
+        "admin": env("AUTH_LDAP_GROUP_ADMIN", default="cn=admin,ou=groups,dc=example,dc=com"),
+        "hr": env("AUTH_LDAP_GROUP_HR", default="cn=hr,ou=groups,dc=example,dc=com"),
+        "tech": env("AUTH_LDAP_GROUP_TECH", default="cn=tech,ou=groups,dc=example,dc=com"),
+        "user": env("AUTH_LDAP_GROUP_USER", default="cn=user,ou=groups,dc=example,dc=com"),
+    }
+}
+
+# Cache settings
+AUTH_LDAP_CACHE_TIMEOUT = 3600
+
+# Always update user on login
+AUTH_LDAP_ALWAYS_UPDATE_USER = True
+
+# Mirror groups in Django
+AUTH_LDAP_MIRROR_GROUPS = True
+
+# Find group permissions
+AUTH_LDAP_FIND_GROUP_PERMS = True
+
+# Connection options
+AUTH_LDAP_CONNECTION_OPTIONS = {
+    ldap.OPT_DEBUG_LEVEL: 1,
+    ldap.OPT_REFERRALS: 0,
+}
+
+# TLS options (uncomment if using TLS)
+# AUTH_LDAP_START_TLS = True
+# AUTH_LDAP_CONNECTION_OPTIONS[ldap.OPT_X_TLS_REQUIRE_CERT] = ldap.OPT_X_TLS_NEVER
 
 
 # from django.conf import settings

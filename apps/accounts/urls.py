@@ -1,5 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
 from . import views
 from .forms import (
     CustomPasswordResetForm,
@@ -7,9 +9,12 @@ from .forms import (
 )
 
 urlpatterns = [
+    # Root redirect to home
+    path("", lambda request: HttpResponseRedirect('/home/'), name="root"),
+    
     # Login / Logout
     path("login/", views.CustomLoginView.as_view(), name="login"),
-    path("logout/", auth_views.LogoutView.as_view(next_page="login"), name="logout"),
+    path("logout/", views.custom_logout_view, name="logout"),
 
     # Home
     path("home/", views.home_view, name="home"),
@@ -40,5 +45,9 @@ urlpatterns = [
     path("dashboard/hr/", views.hr_dashboard, name="hr_dashboard"),
     path("dashboard/tech/", views.tech_dashboard, name="tech_dashboard"),
     path("dashboard/user/", views.user_dashboard, name="user_dashboard"),
+    
+    # LDAP User Management (Admin only)
+    path("ldap/create-user/", views.create_ldap_user, name="create_ldap_user"),
+    path("ldap/list-users/", views.list_ldap_users, name="list_ldap_users"),
 ]
 
