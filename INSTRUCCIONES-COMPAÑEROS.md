@@ -7,10 +7,10 @@ He dockerizado completamente la aplicación Django con autenticación LDAP. **To
 
 ### 1. Obtener el código
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/JuanRRaFdez/Mainly-labs.git
 cd Mainly-labs
-git checkout juanrra_implementacion_ldap
 ```
+> **Nota**: El código Docker ya está en la rama main
 
 ### 2. Configurar variables de entorno
 ```bash
@@ -25,21 +25,28 @@ docker-compose up -d
 ```
 > **⏱️ Primera vez**: Puede tardar 2-3 minutos descargando imágenes
 
-### 4. Cargar usuarios de prueba en LDAP
+### 4. Configurar base de datos Django
+```bash
+# Ejecutar migraciones para crear las tablas
+docker-compose exec web python manage.py migrate
+```
+> **Importante**: Esto crea las tablas necesarias en PostgreSQL
+
+### 5. Cargar usuarios de prueba en LDAP
 ```bash
 # Esperar a que LDAP esté listo (unos 30 segundos)
 docker-compose exec ldap ldapadd -x -D "cn=admin,dc=example,dc=com" -w InterNat -f /ldap/init_ldap_data.ldif
 ```
 > **Nota**: Este comando carga los usuarios admin y testuser automáticamente
 
-### 5. Verificar y corregir roles de usuario
+### 6. Verificar y corregir roles de usuario
 ```bash
 # Verificar que el usuario admin tenga el rol correcto
 docker-compose exec web python fix_admin_role.py
 ```
 > **Importante**: Esto asegura que admin vaya al dashboard de administrador
 
-### 6. Verificar que todo funciona
+### 7. Verificar que todo funciona
 ```bash
 docker-compose ps
 ```
@@ -52,7 +59,7 @@ ldap        Up
 phpldapadmin Up
 ```
 
-### 7. Acceder a la aplicación
+### 8. Acceder a la aplicación
 - **Aplicación**: http://localhost:8000
 - **Usuario**: `admin` / **Contraseña**: `admin123`
 

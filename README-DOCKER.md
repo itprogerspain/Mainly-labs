@@ -4,19 +4,22 @@
 
 ```bash
 # 1. Clonar el repositorio
-git clone <tu-repo-url>
+git clone https://github.com/JuanRRaFdez/Mainly-labs.git
 cd Mainly-labs
 
-# 2. Cambiar a la rama con Docker
-git checkout juanrra_implementacion_ldap
-
-# 3. Crear archivo de configuración
+# 2. Crear archivo de configuración
 cp .env.example .env
 
-# 4. Levantar todos los servicios
+# 3. Levantar todos los servicios
 docker-compose up -d
 
-# 5. ¡Acceder a la aplicación!
+# 4. Configurar base de datos
+docker-compose exec web python manage.py migrate
+
+# 5. Cargar usuarios LDAP
+docker-compose exec ldap ldapadd -x -D "cn=admin,dc=example,dc=com" -w InterNat -f /ldap/init_ldap_data.ldif
+
+# 6. ¡Acceder a la aplicación!
 # Web: http://localhost:8000
 # LDAP Admin: http://localhost:8080
 ```
