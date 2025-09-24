@@ -13,7 +13,6 @@ dn: cn=active,ou=groups,dc=example,dc=com
 objectClass: groupOfNames
 cn: active
 member: uid=admin,ou=users,dc=example,dc=com
-member: uid=testuser,ou=users,dc=example,dc=com
 
 dn: cn=staff,ou=groups,dc=example,dc=com
 objectClass: groupOfNames
