@@ -242,3 +242,7 @@ def list_ldap_users(request):
     except Exception as e:
         messages.error(request, f'Error al obtener usuarios LDAP: {str(e)}')
         return redirect('admin_dashboard')
+
+
+def usuaroios_django():
+    pass
