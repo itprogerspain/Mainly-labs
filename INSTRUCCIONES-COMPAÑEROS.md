@@ -75,6 +75,19 @@ docker-compose logs -f web
 
 ## ⚠️ Posibles problemas y soluciones
 
+### Permisos de Docker (Linux)
+Si al ejecutar `docker-compose` te da error de permisos:
+```bash
+# Opción 1: Usar sudo temporalmente
+sudo docker-compose up -d
+sudo docker-compose ps
+
+# Opción 2: Arreglar permisos permanentemente
+sudo usermod -aG docker $USER
+sudo systemctl restart docker
+# Luego cerrar terminal y abrir nueva (o logout/login)
+```
+
 ### Puerto 8000 ocupado
 ```bash
 # En docker-compose.yml cambiar:
