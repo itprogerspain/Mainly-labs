@@ -33,3 +33,4 @@ wcwidth==0.2.13
 django-auth-ldap==5.0.0
 python-ldap==3.4.4
 django-widget-tweaks==1.5.0
+Pillow==10.4.0
