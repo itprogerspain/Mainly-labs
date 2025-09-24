@@ -28,6 +28,7 @@ member: uid=admin,ou=users,dc=example,dc=com
 dn: cn=admin,ou=groups,dc=example,dc=com
 objectClass: groupOfNames
 cn: admin
+member: uid=admin,ou=users,dc=example,dc=com
 member: uid=juanrra,ou=users,dc=example,dc=com
 member: uid=adminuser,ou=users,dc=example,dc=com
 
@@ -47,12 +48,41 @@ member: uid=matias,ou=users,dc=example,dc=com
 dn: cn=user,ou=groups,dc=example,dc=com
 objectClass: groupOfNames
 cn: user
+member: uid=testuser,ou=users,dc=example,dc=com
 member: uid=emilio,ou=users,dc=example,dc=com
 member: uid=pepe,ou=users,dc=example,dc=com
 member: uid=pedro,ou=users,dc=example,dc=com
 member: uid=paquito,ou=users,dc=example,dc=com
 
 # Users
+dn: uid=admin,ou=users,dc=example,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: admin
+cn: Administrator
+sn: Administrator
+givenName: Admin
+mail: admin@example.com
+userPassword: admin123
+uidNumber: 1000
+gidNumber: 1000
+homeDirectory: /home/admin
+loginShell: /bin/bash
+
+dn: uid=testuser,ou=users,dc=example,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: testuser
+cn: Test User
+sn: User
+givenName: Test
+mail: testuser@example.com
+userPassword: testpass123
+uidNumber: 1010
+gidNumber: 1010
+homeDirectory: /home/testuser
+loginShell: /bin/bash
+
 dn: uid=juanrra,ou=users,dc=example,dc=com
 objectClass: inetOrgPerson
 objectClass: posixAccount

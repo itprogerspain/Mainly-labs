@@ -1,7 +1,7 @@
 # 📋 INSTRUCCIONES PARA COMPAÑEROS DE EQUIPO
 
 ## 🎯 Qué vas a encontrar
-Juan ha dockerizado completamente la aplicación Django con autenticación LDAP. **Todo funciona automáticamente** sin instalaciones locales.
+He dockerizado completamente la aplicación Django con autenticación LDAP. **Todo funciona automáticamente** sin instalaciones locales.
 
 ## 📥 Pasos para usar el sistema
 
@@ -25,7 +25,14 @@ docker-compose up -d
 ```
 > **⏱️ Primera vez**: Puede tardar 2-3 minutos descargando imágenes
 
-### 4. Verificar que todo funciona
+### 4. Cargar usuarios de prueba en LDAP
+```bash
+# Esperar a que LDAP esté listo (unos 30 segundos)
+docker-compose exec ldap ldapadd -x -D "cn=admin,dc=example,dc=com" -w InterNat -f /ldap/init_ldap_data.ldif
+```
+> **Nota**: Este comando carga los usuarios admin y testuser automáticamente
+
+### 5. Verificar que todo funciona
 ```bash
 docker-compose ps
 ```
