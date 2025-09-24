@@ -11,7 +11,7 @@ cd Mainly-labs
 git checkout juanrra_implementacion_ldap
 
 # 3. Crear archivo de configuración
-cp .env.example .env.docker
+cp .env.example .env
 
 # 4. Levantar todos los servicios
 docker-compose up -d

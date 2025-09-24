@@ -15,7 +15,7 @@ git checkout juanrra_implementacion_ldap
 ### 2. Configurar variables de entorno
 ```bash
 # Crear archivo de configuración
-cp .env.example .env.docker
+cp .env.example .env
 ```
 > **Nota**: Los valores por defecto funcionan perfectamente para desarrollo
 
