@@ -32,7 +32,14 @@ docker-compose exec ldap ldapadd -x -D "cn=admin,dc=example,dc=com" -w InterNat 
 ```
 > **Nota**: Este comando carga los usuarios admin y testuser automáticamente
 
-### 5. Verificar que todo funciona
+### 5. Verificar y corregir roles de usuario
+```bash
+# Verificar que el usuario admin tenga el rol correcto
+docker-compose exec web python fix_admin_role.py
+```
+> **Importante**: Esto asegura que admin vaya al dashboard de administrador
+
+### 6. Verificar que todo funciona
 ```bash
 docker-compose ps
 ```
@@ -45,7 +52,7 @@ ldap        Up
 phpldapadmin Up
 ```
 
-### 5. Acceder a la aplicación
+### 7. Acceder a la aplicación
 - **Aplicación**: http://localhost:8000
 - **Usuario**: `admin` / **Contraseña**: `admin123`
 
