@@ -28,7 +28,7 @@ pyasn1_modules==0.4.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 python-ipware==3.0.0
-python_ldap==3.4.4
+python-ldap==3.4.4
 redis==6.4.0
 setuptools==80.9.0
 six==1.17.0
